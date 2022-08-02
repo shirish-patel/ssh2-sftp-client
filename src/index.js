@@ -208,9 +208,9 @@ class SftpClient {
         );
       }
       const retryOpts = {
-        retries: config.retries ?? 1,
-        factor: config.factor ?? 2,
-        minTimeout: config.retry_minTimeout ?? 25000,
+        retries: config.retries || 1,
+        factor: config.factor || 2,
+        minTimeout: config.retry_minTimeout || 25000,
       };
       await promiseRetry(retryOpts, async (retry, attempt) => {
         try {
@@ -1180,7 +1180,7 @@ class SftpClient {
         encoding: 'utf8',
         withFileTypes: true,
       });
-      if (options?.filter) {
+      if (options.filter) {
         dirEntries = dirEntries.filter((item) =>
           options.filter(join(srcDir, item.name), item.isDirectory())
         );
@@ -1245,7 +1245,7 @@ class SftpClient {
   async _downloadDir(srcDir, dstDir, options) {
     try {
       let fileList = await this._list(srcDir);
-      if (options?.filter) {
+      if (options.filter) {
         fileList = fileList.filter((item) =>
           options.filter(
             `${srcDir}${this.remotePathSep}${item.name}`,
@@ -1276,7 +1276,7 @@ class SftpClient {
         if (f.type === 'd') {
           await this._downloadDir(newSrc, newDst, options);
         } else if (f.type === '-') {
-          if (options?.useFasget) {
+          if (options.useFasget) {
             downloadFiles.push(this._fastGet(newSrc, newDst));
           } else {
             downloadFiles.push(this._get(newSrc, newDst));
