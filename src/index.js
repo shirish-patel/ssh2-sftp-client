@@ -1192,7 +1192,7 @@ class SftpClient {
         if (e.isDirectory()) {
           await this.uploadDir(newSrc, newDst, options);
         } else if (e.isFile()) {
-          if (options?.useFastput) {
+          if (options.useFastput) {
             fileUploads.push(this._fastPut(newSrc, newDst));
           } else {
             fileUploads.push(this._put(newSrc, newDst));
